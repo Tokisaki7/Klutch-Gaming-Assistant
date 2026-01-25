@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Klutch // GAMING OS V1.0</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              background: '#050505', // True Black
+              surface: '#0f0f11', // Deep Metal
+              primary: '#00f0ff', // Cyber Cyan
+              secondary: '#7000ff', // Neon Purple
+              accent: '#ff003c', // Cyber Red
+              success: '#00ff9f', // Matrix Green
+              warning: '#fcee0a', // Cyber Yellow
+              gold: '#ffd700', // Gold
+            },
+            fontFamily: {
+              sans: ['Rajdhani', 'ui-sans-serif', 'system-ui'],
+              display: ['Orbitron', 'sans-serif'],
+              mono: ['JetBrains Mono', 'monospace'],
+            },
+            backgroundImage: {
+              'cyber-grid': 'linear-gradient(rgba(0, 240, 255, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 240, 255, 0.03) 1px, transparent 1px)',
+              'vignette': 'radial-gradient(circle at center, transparent 0%, #000000 120%)',
+              'gradient-main': 'linear-gradient(135deg, #00f0ff 0%, #7000ff 100%)',
+              'gradient-gold': 'linear-gradient(135deg, #fce38a 0%, #f38181 100%)',
+            },
+            boxShadow: {
+              'neon-blue': '0 0 10px rgba(0, 240, 255, 0.5), 0 0 20px rgba(0, 240, 255, 0.3)',
+              'neon-purple': '0 0 10px rgba(112, 0, 255, 0.5), 0 0 20px rgba(112, 0, 255, 0.3)',
+              'neon-gold': '0 0 15px rgba(255, 215, 0, 0.6), 0 0 30px rgba(255, 215, 0, 0.4)',
+              'holo-card': '0 8px 32px 0 rgba(0, 0, 0, 0.37)',
+            },
+            animation: {
+              'pulse-fast': 'pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+              'scanline': 'scanline 8s linear infinite',
+              'float': 'float 4s ease-in-out infinite',
+              'hud-spin': 'spin 10s linear infinite',
+              'gradient-x': 'gradient-x 3s ease infinite',
+              'glitch': 'glitch 1s linear infinite',
+            },
+            keyframes: {
+              scanline: {
+                '0%': { transform: 'translateY(-100%)' },
+                '100%': { transform: 'translateY(100%)' }
+              },
+              float: {
+                '0%, 100%': { transform: 'translateY(0)' },
+                '50%': { transform: 'translateY(-10px)' },
+              },
+              'gradient-x': {
+                '0%, 100%': {
+                  'background-size': '200% 200%',
+                  'background-position': 'left center'
+                },
+                '50%': {
+                  'background-size': '200% 200%',
+                  'background-position': 'right center'
+                },
+              },
+              glitch: {
+                '2%, 64%': { transform: 'translate(2px,0) skew(0deg)' },
+                '4%, 60%': { transform: 'translate(-2px,0) skew(0deg)' },
+                '62%': { transform: 'translate(0,0) skew(5deg)' },
+              }
+            }
+          },
+        },
+      }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&family=Orbitron:wght@400;500;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+      body {
+        background-color: #050505;
+        color: #e0e0e0;
+        overflow: hidden;
+      }
+      
+      /* Cyber Scrollbar */
+      ::-webkit-scrollbar { width: 4px; }
+      ::-webkit-scrollbar-track { background: #0f0f11; }
+      ::-webkit-scrollbar-thumb { background: #00f0ff; border-radius: 2px; }
+      ::-webkit-scrollbar-thumb:hover { background: #7000ff; box-shadow: 0 0 10px #7000ff; }
+
+      /* Glassmorphism Classes */
+      .glass-panel {
+        background: rgba(15, 15, 17, 0.65);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+      }
+      
+      .glass-hud {
+        background: rgba(5, 5, 5, 0.85);
+        backdrop-filter: blur(12px);
+        border-top: 1px solid rgba(0, 240, 255, 0.3);
+        box-shadow: 0 -4px 30px rgba(0,0,0,0.5);
+      }
+
+      /* CRT Scanline Effect */
+      .scanlines {
+        position: fixed;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0) 50%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.2));
+        background-size: 100% 4px;
+        pointer-events: none;
+        z-index: 9999;
+        opacity: 0.15;
+      }
+
+      .markdown-body p { margin-bottom: 0.8em; }
+      .markdown-body strong { color: #00f0ff; font-weight: 700; }
+      .markdown-body code { background: rgba(0, 240, 255, 0.1); color: #00f0ff; padding: 2px 6px; border-radius: 4px; font-family: 'JetBrains Mono'; }
+      .markdown-body pre { background: #0a0a0a; border: 1px solid #333; padding: 12px; border-radius: 8px; overflow-x: auto; margin-bottom: 1em; }
+      
+      /* RGB Text Animation Class */
+      .text-rgb-animate {
+        background: linear-gradient(to right, #ff0000, #00ff00, #0000ff, #ff0000);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        background-size: 300% 100%;
+        animation: gradient-x 2s linear infinite;
+      }
+
+      /* Glitch Border Effect */
+      .border-glitch {
+        position: relative;
+        border-color: white;
+      }
+      .border-glitch::before, .border-glitch::after {
+        content: '';
+        position: absolute;
+        top: -2px; left: -2px; right: -2px; bottom: -2px;
+        background: linear-gradient(45deg, #ff00ea, #00f0ff, #ff00ea);
+        z-index: -1;
+        background-size: 400%;
+        animation: gradient-x 20s linear infinite;
+        border-radius: 9999px;
+      }
+      .border-glitch:hover {
+        animation: glitch 0.3s cubic-bezier(.25, .46, .45, .94) both infinite;
+        border-color: transparent;
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react/": "https://esm.sh/react@^19.2.3/",
+    "react": "https://esm.sh/react@^19.2.3",
+    "@google/genai": "https://esm.sh/@google/genai@^1.38.0",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+    "react-markdown": "https://esm.sh/react-markdown@9.0.1"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+  <body>
+    <div id="root"></div>
+    <div class="scanlines"></div>
+  <script type="module" src="/index.tsx"></script>
+</body>
+</html>

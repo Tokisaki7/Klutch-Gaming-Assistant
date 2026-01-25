@@ -1,0 +1,8 @@
+{
+  "name": "Klutch Gaming Assist",
+  "description": "Your ultimate AI Gaming Copilot. Real-time strategy, voice comms, and asset generation powered by Gemini Pro & Flash.",
+  "requestFramePermissions": [
+    "microphone",
+    "camera"
+  ]
+}
